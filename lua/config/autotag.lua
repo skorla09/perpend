@@ -1,0 +1,8 @@
+-- COMMENTED OUT FOR THE MOMENT, SINCE ALL OPTIONS ARE DEFAULT  WILL BE REMOVED LATER
+-- return {
+--     opts = {
+--         enable_close = true,
+--         enable_rename = true,
+--         enable_close_on_slash = false,
+--     },
+-- }

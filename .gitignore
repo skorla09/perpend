@@ -1,0 +1,17 @@
+# Neovim
+plugin/
+spell/
+.netrwhist
+
+# Lazy.nvim
+lazy-lock.json
+
+# Scratch files (per AGENTS.md: root-level scratch files are not part of the config)
+tsconfig.json
+*.tsx
+*.js
+*.py
+*.html
+
+# OS
+.DS_Store
