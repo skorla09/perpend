@@ -31,18 +31,15 @@ The completion of this phase marks the point where Perpend becomes a software pr
 
 ## Phase II — Developer Productivity
 
-**Goal:** Improve the daily development experience.
+**Goal:** Improve the daily development experience while preserving simplicity.
 
 With a solid foundation in place, the next step is providing tools that increase productivity without sacrificing simplicity.
 
 Areas of focus include:
 
-- Git integration
-- Testing
-- Debugging
-- Task runners
-- Terminal integration
-- Project management
+- Git integration (gitsigns.nvim + vim-fugitive)
+
+Additional productivity tools (terminal integration, session persistence, debugging, task runners, testing) are documented as integration patterns in the Handbook rather than included by default. This decision reflects Perpend's commitment to minimalism: only plugins that most developers need most of the time are included. Users who need additional functionality can follow the documented patterns to extend their configuration.
 
 Every addition must continue following the architectural principles established during Phase I.
 
@@ -125,7 +122,7 @@ These principles serve as the project's definition of quality.
 
 ## Current Status
 
-Perpend has completed **Phase I — Foundation**.
+Perpend has completed **Phase II — Developer Productivity**.
 
 The project's architecture, documentation, and core development workflow have been established:
 
@@ -136,10 +133,11 @@ The project's architecture, documentation, and core development workflow have be
 - Diagnostics
 - Telescope navigation
 - Keymap architecture (ADR-001)
-- Perpend Handbook, complete with Style Guide, Folder Structure, Plugin Guidelines, Milestones, Research Notes, and Agent Guide
+- Git integration via gitsigns.nvim and vim-fugitive
+- Perpend Handbook, complete with Style Guide, Folder Structure, Plugin Guidelines, Milestones, Research Notes, Agent Guide, and Integration Patterns
 - Startup smoke test (`scripts/smoke.sh`)
 
-The next step is **Phase II — Developer Productivity**, which focuses on testing, debugging, task runners, terminal integration, and project management while preserving the simplicity and maintainability that define the project.
+The next step is **Phase III — User Experience**, which focuses on dashboard, statusline, notifications, which-key integration, session management, startup experience, and user interface consistency.
 
 ---
 

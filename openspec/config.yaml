@@ -1,0 +1,30 @@
+schema: spec-driven
+
+context: |
+  Project: Perpend — A minimal Neovim distribution
+  Tech stack: Neovim 0.12.2, Lua, lazy.nvim plugin manager
+  Architecture: 3-file pattern (plugin declaration, config file, keymaps)
+  Conventions:
+    - Every dependency must justify its place
+    - Declarative configuration preferred (opts over config)
+    - Documentation is part of the product
+    - Dead config stays as commented-out lines with notes
+    - Research before implementation
+    - Minimal change principle
+  Plugins: gitsigns.nvim, vim-fugitive, lualine.nvim, which-key.nvim, nvim-treesitter, telescope.nvim, kanagawa.nvim
+  No Mason — LSP servers on $PATH only
+  Phase I (Foundation) complete, Phase II (Developer Productivity) complete, Phase III (User Experience) current
+
+rules:
+  proposal:
+    - Keep proposals under 500 words
+    - Always include "Non-goals" section
+    - Reference Perpend principles where applicable
+  design:
+    - Document decisions with rationale
+    - Include alternatives considered
+    - Reference existing ADRs if relevant
+  tasks:
+    - Break tasks into chunks of max 2 hours
+    - Include testing steps
+    - Include documentation updates
