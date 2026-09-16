@@ -10,11 +10,11 @@
 ## 2. Testing
 
 - [x] 2.1 Verify statusline displays correctly
-- [ ] 2.2 Check all sections show information
-- [ ] 2.3 Test with different file types
-- [ ] 2.4 Verify colorscheme compatibility
+- [x] 2.2 Check all sections show information
+- [x] 2.3 Test with different file types
+- [x] 2.4 Verify colorscheme compatibility
 
 ## 3. Documentation
 
-- [ ] 3.1 Add research note N-014 (statusline enhancement)
-- [ ] 3.2 Update AGENTS.md plugin table
+- [x] 3.1 Add research note N-014 (statusline enhancement)
+- [x] 3.2 Update AGENTS.md plugin table

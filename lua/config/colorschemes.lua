@@ -6,15 +6,20 @@ M.colorschemes = {
     "tokyonight",
 }
 
-M.current_index = 1
-
 function M.get_current()
-    return M.colorschemes[M.current_index]
+    local current = vim.g.colors_name or "kanagawa"
+    for i, cs in ipairs(M.colorschemes) do
+        if cs == current then
+            return cs, i
+        end
+    end
+    return M.colorschemes[1], 1
 end
 
 function M.cycle()
-    M.current_index = M.current_index % #M.colorschemes + 1
-    local colorscheme = M.colorschemes[M.current_index]
+    local _, currentIndex = M.get_current()
+    local nextIndex = currentIndex % #M.colorschemes + 1
+    local colorscheme = M.colorschemes[nextIndex]
     vim.cmd.colorscheme(colorscheme)
     vim.notify("Colorscheme: " .. colorscheme, vim.log.levels.INFO)
 end

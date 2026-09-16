@@ -41,7 +41,7 @@ return {
         height = { min = 1, max = 10 },
         margin = { top = 0, right = 1, bottom = 0, left = 1 },
         padding = { top = 0, right = 1, bottom = 0, left = 1 },
-        sort = "status",
+        sort = { "level", "added" },
         level = vim.log.levels.INFO,
         icons = {
           error = " ",
@@ -50,9 +50,6 @@ return {
           debug = " ",
           trace = " ",
         },
-        keep = function(notif)
-          return vim.fn.has("win32") == 1 or notif.level == vim.log.levels.ERROR
-        end,
         style = "compact",
         top_down = true,
         date_format = "%T",

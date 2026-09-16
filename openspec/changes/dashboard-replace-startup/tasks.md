@@ -15,11 +15,11 @@
 
 - [x] 3.1 Verify Neovim starts without errors
 - [x] 3.2 Verify dashboard displays correctly
-- [ ] 3.3 Verify all buttons work (Find File opens Telescope, etc.)
-- [ ] 3.4 Verify Telescope keymaps still work from normal mode
-- [ ] 3.5 Verify startup stats display
+- [x] 3.3 Verify all buttons work (Find File opens Telescope, etc.)
+- [x] 3.4 Verify Telescope keymaps still work from normal mode
+- [x] 3.5 Verify startup stats display
 
 ## 4. Documentation
 
-- [ ] 4.1 Add research note N-013 (dashboard plugin selection)
-- [ ] 4.2 Update AGENTS.md plugin table
+- [x] 4.1 Add research note N-013 (dashboard plugin selection)
+- [x] 4.2 Update AGENTS.md plugin table
