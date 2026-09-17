@@ -12,5 +12,6 @@ return {
 		{ "<leader>t", group = "Tests" },
 		{ "<leader>b", group = "Buffers" },
 		{ "<leader>e", group = "Explorer" },
+		{ "<leader>u", group = "UI" },
 	},
 }

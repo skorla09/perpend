@@ -104,6 +104,136 @@ Each note identifies the relevant version, source, and date so that another engi
 
 ---
 
+## N-008: Testing framework exclusion — agnostic approach
+
+- **Technology:** neotest, vim-test (evaluated, excluded from default)
+- **Version Investigated:** Current mainstream distributions (2026)
+- **Perpend Version:** — (not adopted)
+- **Source:** Distribution analysis (LazyVim, NvChad, AstroNvim, kickstart.nvim)
+- **Finding:** No major Neovim distribution includes a testing framework by default. LazyVim offers neotest as an optional extra via `:LazyExtras`. NvChad and kickstart.nvim do not include testing at all. AstroNvim provides it as an optional community extra.
+- **Impact:** Perpend does not include testing plugins. Testing is project-specific and should be configured per-project.
+- **Conclusion:** Testing is excluded from Perpend's default plugins. Users can follow integration patterns in `handbook/integration-patterns.md`.
+- **Date:** 2026-09-14
+
+---
+
+## N-009: Debugging (DAP) exclusion — workflow-dependent
+
+- **Technology:** nvim-dap, nvim-dap-ui (evaluated, excluded from default)
+- **Version Investigated:** Current mainstream distributions (2026)
+- **Perpend Version:** — (not adopted)
+- **Source:** Distribution analysis (LazyVim, NvChad, AstroNvim, kickstart.nvim)
+- **Finding:** Debugging inclusion is split. AstroNvim and LunarVim include DAP by default as "IDE-like" distributions. LazyVim offers it as an optional extra. NvChad does not include it. kickstart.nvim provides a commented-out example. The author of nvim-dap states: "Debug adapter installations are out of scope. It's not the business of an editor plugin to re-invent a package manager."
+- **Impact:** Perpend does not include DAP plugins. Many developers debug outside Neovim (print/log statements, VS Code, JetBrains).
+- **Conclusion:** Debugging is excluded from Perpend's default plugins. Users can follow integration patterns in `handbook/integration-patterns.md`.
+- **Date:** 2026-09-14
+
+---
+
+## N-010: Task runner exclusion — terminal suffices
+
+- **Technology:** overseer.nvim, vim-dispatch (evaluated, excluded from default)
+- **Version Investigated:** Current mainstream distributions (2026)
+- **Perpend Version:** — (not adopted)
+- **Source:** Distribution analysis (LazyVim, NvChad, AstroNvim, kickstart.nvim)
+- **Finding:** Task runners are not universally included. LazyVim offers overseer.nvim as an optional extra. NvChad, AstroNvim, and kickstart.nvim do not include task runners by default. Most developers use terminal commands, `:!`, or tmux for task execution.
+- **Impact:** Perpend does not include task runner plugins. Terminal commands and `:!` suffice for most users.
+- **Conclusion:** Task runners are excluded from Perpend's default plugins. Users can follow integration patterns in `handbook/integration-patterns.md`.
+- **Date:** 2026-09-14
+
+---
+
+## N-011: Terminal integration exclusion — documented pattern
+
+- **Technology:** toggleterm.nvim, snacks.nvim (evaluated, excluded from default)
+- **Version Investigated:** Current mainstream distributions (2026)
+- **Perpend Version:** — (not adopted)
+- **Source:** Distribution analysis (LazyVim, NvChad, AstroNvim, kickstart.nvim)
+- **Finding:** All major distributions include terminal integration by default. LazyVim uses snacks.nvim. NvChad includes a built-in terminal module. AstroNvim uses toggleterm.nvim. kickstart.nvim provides minimal built-in support.
+- **Impact:** Perpend does not include terminal integration plugins. This is a deviation from the ecosystem norm.
+- **Conclusion:** Terminal integration is excluded from Perpend's default plugins to maintain minimalism. Users who need it can follow integration patterns in `handbook/integration-patterns.md`.
+- **Date:** 2026-09-14
+
+---
+
+## N-012: Session persistence exclusion — documented pattern
+
+- **Technology:** persistence.nvim, resession.nvim (evaluated, excluded from default)
+- **Version Investigated:** Current mainstream distributions (2026)
+- **Perpend Version:** — (not adopted)
+- **Source:** Distribution analysis (LazyVim, NvChad, AstroNvim, kickstart.nvim)
+- **Finding:** Session persistence is included by default in LazyVim (persistence.nvim) and AstroNvim (resession.nvim). NvChad and kickstart.nvim do not include it. Project switching (project.nvim) is typically optional.
+- **Impact:** Perpend does not include session persistence plugins. Users who frequently switch between projects may miss this feature.
+- **Conclusion:** Session persistence is excluded from Perpend's default plugins. Users can follow integration patterns in `handbook/integration-patterns.md`.
+- **Date:** 2026-09-14
+
+---
+
+## N-013: Dashboard plugin selection — snacks.nvim vs startup.nvim
+
+- **Technology:** snacks.nvim, startup.nvim (evaluated, snacks.nvim adopted)
+- **Version Investigated:** snacks.nvim latest, startup.nvim 502 stars
+- **Perpend Version:** — (adopted)
+- **Source:** GitHub repository analysis and feature comparison
+- **Finding:** snacks.nvim is maintained by folke (lazy.nvim author) with 16k+ stars, MIT license, and active development. startup.nvim has 502 stars, GPL license, and lower adoption. snacks.nvim provides dashboard, notifier, and other UI modules in a single plugin.
+- **Impact:** Perpend replaces startup.nvim with snacks.nvim for the dashboard. This provides better maintenance, more features, and consistency with the lazy.nvim ecosystem.
+- **Conclusion:** snacks.nvim adopted for dashboard. Decision documented in openspec change `dashboard-replace-startup`.
+- **Date:** 2026-09-14
+
+---
+
+## N-014: Statusline enhancement — lualine.nvim configuration
+
+- **Technology:** lualine.nvim
+- **Version Investigated:** Current lualine.nvim
+- **Perpend Version:** — (adopted)
+- **Source:** lualine.nvim documentation and best practices
+- **Finding:** Minimal `theme = "auto"` configuration lacks essential developer information. Enhanced configuration with explicit sections, separators, and components provides better visibility into file state, LSP connections, and editing context.
+- **Impact:** Perpend enhances lualine.nvim with proper section separators (, ), component separators (, ), and explicit section configuration.
+- **Conclusion:** Enhanced lualine.nvim configuration adopted. Decision documented in openspec change `statusline-enhance`.
+- **Date:** 2026-09-14
+
+---
+
+## N-015: Notification system — snacks.nvim notifier
+
+- **Technology:** snacks.nvim notifier module
+- **Version Investigated:** snacks.nvim latest
+- **Perpend Version:** — (adopted)
+- **Source:** snacks.nvim documentation and integration patterns
+- **Finding:** snacks.nvim provides a built-in notifier module that can be used for LSP progress, plugin notifications, and user messages. It integrates with `vim.notify()` and provides a consistent notification UI.
+- **Impact:** Perpend adopts snacks.nvim notifier for LSP progress notifications with LspProgress autocmd. This provides visual feedback for background operations.
+- **Conclusion:** snacks.nvim notifier adopted. Decision documented in openspec change `notifications`.
+- **Date:** 2026-09-14
+
+---
+
+## N-016: Which-key enablement — keymap discoverability
+
+- **Technology:** which-key.nvim
+- **Version Investigated:** which-key.nvim v3
+- **Perpend Version:** — (adopted)
+- **Source:** which-key.nvim documentation and best practices
+- **Finding:** which-key.nvim is configured with groups but keymaps are commented out. Enabling the `<leader>?` keymap provides buffer-local keymap discovery, improving usability for new users.
+- **Impact:** Perpend enables the `<leader>?` keymap to show buffer-local keymaps. This helps users discover available keybindings without memorizing them.
+- **Conclusion:** which-key keymaps enabled. Decision documented in openspec change `which-key-enable`.
+- **Date:** 2026-09-14
+
+---
+
+## N-017: UI consistency — colorscheme switching
+
+- **Technology:** kanagawa.nvim, catppuccin.nvim, tokyonight.nvim
+- **Version Investigated:** Current colorscheme plugins
+- **Perpend Version:** — (adopted)
+- **Source:** Colorscheme plugin documentation and best practices
+- **Finding:** Multiple colorschemes are available but not configured consistently. Adding proper configuration and a colorscheme switcher improves user experience and allows easy theme switching.
+- **Impact:** Perpend adds colorscheme configuration for all themes and a `<leader>uc` keymap to cycle through them. This provides visual feedback and improves discoverability.
+- **Conclusion:** UI consistency adopted with colorscheme switcher. Decision documented in openspec change `ui-consistency`.
+- **Date:** 2026-09-14
+
+---
+
 # MAINTAINING THIS CHAPTER
 
 New findings should be appended with a new `N-NNN` number following the format above. When later research corrects an earlier finding, preserve the original note, clearly mark the newer information, and record the relevant version or date. Do not let obsolete knowledge appear as current guidance (`agent-guide.md` section 3.8).

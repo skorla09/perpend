@@ -94,6 +94,18 @@ _Verified by:_ `docs/adr/`, `docs/handbook/research-notes.md`, `agent-guide.md` 
 
 ---
 
+# PHASE II MILESTONES
+
+## M-009: Minimalist philosophy — exclude workflow-dependent features
+
+During Phase II planning, the project investigated whether to include testing, debugging, task runners, terminal integration, and session persistence. Research showed that testing, debugging, and task runners are not universally included in major distributions. Terminal integration and session persistence are more common, but excluding them maintains minimalism.
+
+**Lesson:** Only include plugins that most developers need most of the time. Workflow-dependent features (testing, debugging, task runners, terminal integration, session persistence) should be documented as integration patterns rather than included by default. This preserves simplicity while providing guidance for users who need additional functionality.
+
+_Verified by:_ `docs/handbook/research-notes.md` (N-008 through N-012), `docs/handbook/integration-patterns.md`, `docs/handbook/roadmap.md`.
+
+---
+
 # SUSTAINING THIS CHAPTER
 
 New milestones should be appended with a new `M-NNN` number and must point to the artifact that verifies the lesson. A milestone without evidence is a claim, not a lesson.
