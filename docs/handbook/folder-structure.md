@@ -40,10 +40,11 @@ The directories mirror the separation:
 
 - `init.lua` — the single entry point; loads `config.lazy`.
 - `lua/config/lazy.lua` — bootstraps lazy.nvim, loads the global config and keymaps, then calls `require("lazy").setup("plugins")`.
-- `lazy-lock.json` — pinned plugin versions managed by lazy.nvim.
+- `lazy-lock.json` — pinned plugin versions managed by lazy.nvim. It is committed so installations are reproducible (`ADR-005`).
 - `docs/` — the Handbook and Architecture Decision Records.
 - `lsp/` — per-server configs for native LSP (`vim.lsp.config()`).
-- Root-level scratch files (`*.tsx`, `*.js`, `*.py`, etc.) are not part of the configuration.
+- `scripts/smoke.sh` — headless startup test.
+- Root-level scratch files (`*.tsx`, `*.js`, `*.py`, etc.) are not part of the configuration and are ignored only at the repository root.
 
 ---
 

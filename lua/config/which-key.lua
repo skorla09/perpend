@@ -4,14 +4,13 @@ return {
 	icons = {
 		mappings = true,
 	},
+	-- Only declare groups that currently contain mappings. Empty groups are
+	-- added when the corresponding feature is implemented.
 	spec = {
 		{ "<leader>g", group = "Git" },
 		{ "<leader>l", group = "Language" },
 		{ "<leader>f", group = "Find" },
 		{ "<leader>c", group = "Code" },
-		{ "<leader>t", group = "Tests" },
-		{ "<leader>b", group = "Buffers" },
-		{ "<leader>e", group = "Explorer" },
 		{ "<leader>u", group = "UI" },
 	},
 }

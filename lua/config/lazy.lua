@@ -1,5 +1,9 @@
--- Node.js configuration - always use latest stable version
-vim.g.node_host_prog = vim.fn.exepath("node") or "/usr/local/bin/node"
+-- Node.js host program. Only set it when Node.js is available; `exepath`
+-- returns an empty string when it is not found.
+local node = vim.fn.exepath("node")
+if node ~= "" then
+	vim.g.node_host_prog = node
+end
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
