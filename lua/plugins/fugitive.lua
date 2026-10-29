@@ -6,7 +6,7 @@ return {
 	-- 	{
 	-- 		"<leader>gS",
 	-- 		"<cmd>Git<CR>",
-	-- 		desc = "Git Status",
+	-- 		desc = "Git status",
 	-- 	},
 	-- },
 	keys = require("keymaps.git.fugitive"),

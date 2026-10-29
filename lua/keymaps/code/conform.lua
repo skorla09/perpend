@@ -7,6 +7,6 @@ return {
                 lsp_format = "fallback",
             })
         end,
-        desc = "Format Buffer",
+        desc = "Format buffer",
     },
 }

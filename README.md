@@ -73,14 +73,39 @@ Each layer depends on the ones beneath it while remaining responsible only for i
 
 ## Requirements
 
-- [Neovim](https://neovim.io) 0.12+
-- [git](https://git-scm.com/)
-- [ripgrep](https://github.com/BurntSushi/ripgrep) (for Telescope live grep)
-- [fd](https://github.com/sharkdp/fd) (for Telescope file finder)
-- A C compiler (for Treesitter parsing — `gcc`, `clang`, or `cc`)
-- LSP servers on `$PATH`: `lua-language-server`, `typescript-language-server`, `html-languageserver`, `css-languageserver`
+### Required
 
-Perpend does not use Mason. All servers are installed manually.
+- [Neovim](https://neovim.io) **0.12+**
+- [git](https://git-scm.com/) 2.19+
+- [tree-sitter-cli](https://github.com/tree-sitter/tree-sitter/blob/master/crates/cli/README.md) **0.26.1+**
+- `tar` and `curl` (used by nvim-treesitter to fetch parsers)
+- A C compiler (`cc`, `gcc`, or `clang`) to build Treesitter parsers
+
+### Recommended
+
+- [ripgrep](https://github.com/BurntSushi/ripgrep) — Telescope live grep
+- [fd](https://github.com/sharkdp/fd) — Telescope file finder
+- [Node.js](https://nodejs.org/) — required by some LSP servers and formatters
+- A clipboard provider — `wl-copy`/`xclip`/`xsel` on Linux, `pbcopy` on macOS
+
+### LSP servers (on `$PATH`)
+
+Perpend does not use Mason. Install these manually:
+
+| Language   | Binary                        |
+| ---------- | ----------------------------- |
+| Lua        | `lua-language-server`         |
+| TypeScript | `typescript-language-server`  |
+| HTML       | `vscode-html-language-server` |
+| CSS        | `vscode-css-language-server`  |
+
+### Formatters and linters (optional)
+
+`stylua`, `prettierd`/`prettier`, `eslint_d`, `markdownlint-cli2`, and `shellcheck`. Perpend skips a missing formatter or linter without crashing.
+
+### Supported platforms
+
+Linux, macOS, and WSL. The installer is a bash script; native Windows is not supported.
 
 ---
 
@@ -88,7 +113,7 @@ Perpend does not use Mason. All servers are installed manually.
 
 ### Install (to try)
 
-Run the install script. It backs up your existing config and installs only the runtime files.
+Run the install script. It validates the environment, backs up your existing config, and installs only the runtime files.
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/skorla09/perpend/main/install.sh)
@@ -102,7 +127,16 @@ cd perpend
 bash install.sh
 ```
 
-The script installs to `~/.config/nvim/`. Your existing config is backed up to `~/.config/nvim.bak.<timestamp>`.
+The installer:
+
+- refuses to run without Neovim 0.12+ (set `SKIP_NVIM_CHECK=1` to bypass the check),
+- respects `XDG_CONFIG_HOME`, `XDG_DATA_HOME`, and `NVIM_APPNAME`,
+- installs to `$XDG_CONFIG_HOME/nvim` by default,
+- backs up an existing config directory, file, or symlink to `<path>.bak.<timestamp>`,
+- copies `lazy-lock.json` so plugin versions match the repository,
+- warns about missing optional tools but does not install them.
+
+Set `SKIP_BACKUP=1` to remove an existing config instead of backing it up.
 
 ### Clone (to contribute)
 
@@ -112,15 +146,17 @@ Clone the full repository, including documentation and architecture decision rec
 git clone https://github.com/skorla09/perpend.git ~/.config/nvim
 ```
 
-### LSP Servers
+`lazy-lock.json` is committed. Update plugins intentionally with `:Lazy update` and commit the lockfile with the related change (`ADR-005`).
 
-Perpend does not use Mason. LSP servers must be installed manually on your `$PATH`.
+### First launch
+
+Open Neovim and let lazy.nvim install the pinned plugins. Then run `:checkhealth` and `:Lazy` to confirm the setup.
 
 ---
 
 ## Key Workflows
 
-Leader key is `<Space>`.
+Leader key is `<Space>`. Neovim 0.12's default LSP mappings are preserved.
 
 ### Navigation
 
@@ -128,27 +164,40 @@ Leader key is `<Space>`.
 |-----|--------|
 | `<C-h/j/k/l>` | Move between windows |
 | `<leader>e` | Toggle file explorer (neo-tree) |
-| `<leader>f` | Find files (Telescope) |
-| `<leader>fg` | Live grep (Telescope) |
+| `<leader>E` | Focus file explorer |
+| `<leader>ff` | Find files (Telescope) |
+| `<leader>fr` | Recent files |
+| `<leader>fg` | Live grep |
+| `<leader>fb` | Find buffers |
+| `<leader>fc` | Commands |
+| `<leader>fh` | Help tags |
+| `<leader>fk` | Keymaps |
 
 ### Editing
 
 | Key | Action |
 |-----|--------|
+| `<leader>h` | Clear search highlight |
 | `<leader>w` | Save file |
 | `<leader>q` | Close window |
 | `<leader>x` | Save and close |
 | `<leader>cf` | Format buffer (conform) |
+| `<leader>cl` | Lint buffer (nvim-lint) |
 
 ### LSP
 
 | Key | Action |
 |-----|--------|
 | `gd` | Go to definition |
-| `gr` | References |
-| `K` | Hover documentation |
-| `<leader>lr` | Rename symbol |
-| `<leader>la` | Code action |
+| `gD` | Go to declaration |
+| `K` | Hover documentation (Neovim default) |
+| `gra` | Code action (Neovim default) |
+| `gri` | Implementation (Neovim default) |
+| `grn` | Rename symbol (Neovim default) |
+| `grr` | References (Neovim default) |
+| `grt` | Type definition (Neovim default) |
+| `<leader>lr` | Rename symbol (alias) |
+| `<leader>la` | Code action (alias) |
 
 ### Diagnostics
 
@@ -156,6 +205,7 @@ Leader key is `<Space>`.
 |-----|--------|
 | `[d` / `]d` | Previous / next diagnostic |
 | `<leader>df` | Show line diagnostics |
+| `<leader>dl` | Diagnostics list |
 
 ### Git
 
@@ -163,9 +213,13 @@ Leader key is `<Space>`.
 |-----|--------|
 | `<leader>gS` | Git status (fugitive) |
 | `]h` / `[h` | Next / previous hunk |
+| `<leader>gp` | Preview hunk |
 | `<leader>gs` | Stage hunk |
+| `<leader>gu` | Undo stage hunk |
 | `<leader>gr` | Reset hunk |
+| `<leader>gR` | Reset buffer |
 | `<leader>gb` | Toggle blame |
+| `<leader>gd` | Diff this |
 
 ---
 
@@ -174,6 +228,7 @@ Leader key is `<Space>`.
 ```
 perpend/
 ├── init.lua                 # Entry point
+├── lazy-lock.json           # Pinned plugin versions (committed)
 ├── install.sh               # Installation script
 ├── AGENTS.md                # Agent operating rules
 ├── lsp/

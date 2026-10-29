@@ -1,10 +1,9 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
--- Grupo general
 local group = augroup("UserAutocmds", { clear = true })
 
--- Por ejemplo: volver a la ultima posicion al abrir un archivo
+-- Restore the cursor to the last known position when reopening a file.
 autocmd("BufReadPost", {
 	group = group,
 	pattern = "*",
@@ -17,7 +16,7 @@ autocmd("BufReadPost", {
 	end,
 })
 
--- Resaltar al copiar/yank
+-- Highlight yanked text briefly.
 autocmd("TextYankPost", {
 	group = group,
 	pattern = "*",
@@ -26,3 +25,13 @@ autocmd("TextYankPost", {
 	end,
 })
 
+-- Treesitter highlighting is a consumer of the parser subsystem (ADR-003).
+-- Neovim core does not enable it for every filetype, so Perpend starts it
+-- explicitly. `pcall` keeps filetypes without an installed parser quiet.
+autocmd("FileType", {
+	group = group,
+	pattern = "*",
+	callback = function()
+		pcall(vim.treesitter.start, 0)
+	end,
+})

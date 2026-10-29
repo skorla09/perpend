@@ -72,7 +72,7 @@ Disabled config is left in place as commented-out lines with the reason (see neo
 | lsp-file-operations   | —                                     | —                             | Depends on neo-tree.nvim                                                                                 |
 | diagnostics (global)  | `keymaps/diagnostics/init.lua`        | `config/diagnostics.lua`      | `[d`/`]d` navigation, `<leader>df` float, `<leader>dl` loclist                                          |
 | defaults (global)     | `keymaps/defaults.lua`                | `config/options.lua`          | Window nav, save/close, search, splits                                                                   |
-| LSP (global)          | `keymaps/language/lsp.lua`            | —                             | gd, gD, gr, gi, gt, K, rename, code actions                                                             |
+| LSP (global)          | `keymaps/language/lsp.lua`            | —                             | gd, gD, `<leader>lr` rename, `<leader>la` code action; Neovim 0.12 `gr*` and `K` defaults preserved        |
 
 ## LSP Configuration
 
@@ -115,9 +115,9 @@ Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`.
 - `<leader>df` = Float diagnostics
 - `<leader>dl` = Diagnostics list
 
-**`lua/keymaps/language/lsp.lua`:** gd, gD, gr, gi, gt, K, `<leader>lr` rename, `<leader>la` code actions.
+**`lua/keymaps/language/lsp.lua`:** gd, gD, `<leader>lr` rename, `<leader>la` code actions. Neovim 0.12's default `K`, `gra`, `gri`, `grn`, `grr`, `grt`, and `grx` are intentionally left untouched.
 
-**Which-key groups** (`config/which-key.lua`): `<leader>g` Git, `<leader>l` Language, `<leader>f` Find, `<leader>c` Code, `<leader>t` Tests, `<leader>b` Buffers, `<leader>e` Explorer.
+**Which-key groups** (`config/which-key.lua`): `<leader>g` Git, `<leader>l` Language, `<leader>f` Find, `<leader>c` Code. Empty groups are added only when their Phase II feature exists.
 
 ## Important Conventions
 
@@ -125,7 +125,7 @@ Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`.
 - **LSP**: Use `vim.lsp.enable()` + `vim.lsp.config()`, NOT `require("lspconfig").X.setup()`
 - **nvim-lspconfig**: Installed for utility commands (`:LspInfo`) only — server configs use native `vim.lsp.enable()` + `vim.lsp.config()`, NOT `require("lspconfig").X.setup()`. Per-server configs in `lsp/*.lua` are consumed natively by Neovim 0.12+
 - **Gitsigns**: `lazy = false` (must load at startup), keymaps via `on_attach`
-- **Treesitter**: Uses new `nvim-treesitter/nvim-treesitter` with `setup()` + `install()` API (no `configs.setup()`)
+- **Treesitter**: Uses new `nvim-treesitter/nvim-treesitter` with `setup()` + `install()` API (no `configs.setup()`). Highlighting is a consumer responsibility: `config/autocmds.lua` calls `pcall(vim.treesitter.start, 0)` on `FileType` (ADR-003, N-008)
 - **nvim-ts-autotag**: Uses new standalone setup with nested `opts` key
 - **lualine**: `theme = "auto"` (auto-detects colorscheme)
 - **lsp-file-operations**: Must list neo-tree as dependency for correct loading order
@@ -136,7 +136,9 @@ Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`.
 - **Keymaps**: every mapping includes a descriptive `desc` for discoverability and Which-key integration (ADR-001)
 - **Dead config**: disabled/experimental config stays as commented-out lines with an explanatory note (neo-tree opts, telescope setup, which-key keys)
 - **Decisions**: significant architectural decisions go in `docs/adr/`; engineering rationale in the Handbook; research findings in `handbook/research-notes.md`
-- **Node.js**: `vim.g.node_host_prog` set inline in `lua/config/lazy.lua`. A standalone Node.js path management utility (`lua/config/nodejs.lua`) exists but is not loaded by default — available for manual use or future integration
+- **Node.js**: `vim.g.node_host_prog` set inline in `lua/config/lazy.lua` only when `exepath("node")` returns a path. A standalone Node.js path management utility (`lua/config/nodejs.lua`) exists but is not loaded by default — available for manual use or future integration
+- **Lockfile**: `lazy-lock.json` is committed (ADR-005). Update plugins with `:Lazy update` and commit the lockfile with the related change
+- **Lazy-loaded keymaps**: require plugin modules inside the keymap callbacks, never at file scope; lazy.nvim evaluates `keys` during spec loading (N-009)
 
 ## File Structure
 
@@ -150,7 +152,8 @@ Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`.
 │   │   ├── 001-keymap-architecture.md
 │   │   ├── 002-plugin-configuration.md
 │   │   ├── 003-treesitter-subsystem.md
-│   │   └── 004-native-lsp-no-mason.md
+│   │   ├── 004-native-lsp-no-mason.md
+│   │   └── 005-committed-plugin-lockfile.md
 │   └── handbook/
 │       ├── agent-guide.md
 │       ├── architecture.md
@@ -164,6 +167,8 @@ Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`.
 │       ├── roadmap.md
 │       ├── style-guide.md
 │       └── vision.md
+├── scripts/
+│   └── smoke.sh
 ├── lsp/
 │   └── lua_ls.lua
 ├── lua/

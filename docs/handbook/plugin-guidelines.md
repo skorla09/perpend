@@ -122,7 +122,18 @@ A rejection is knowledge: preserve the reason.
 
 ---
 
-# 9. THE DECISION TEST
+# 9. VERSION PINNING
+
+Perpend commits `lazy-lock.json` so that a fresh clone resolves the same plugin commits that were reviewed (`ADR-005`).
+
+- Update plugins intentionally with `:Lazy update`.
+- Commit the lockfile together with the configuration change it relates to.
+- Treat a lockfile change as a dependency change: review it, do not hand-merge conflicting entries.
+- Do not ignore the lockfile or let an installer silently discard it.
+
+---
+
+# 10. THE DECISION TEST
 
 Before finalizing any plugin change, apply the decision test (`agent-guide.md` section 16): Does it solve a real problem? Is it simpler than alternatives? Does it have a clear responsibility? Does every dependency justify its place? Can the decision be explained? Does it align with the current phase?
 

@@ -1,51 +1,53 @@
-local builtin = require("telescope.builtin")
+-- Telescope is lazy-loaded, so its modules must be required inside the
+-- callbacks. Requiring them while lazy.nvim evaluates this table would load
+-- Telescope at startup and can cause a module-loading loop.
 return {
 	{
 		"<leader>ff",
 		function()
-			builtin.find_files()
+			require("telescope.builtin").find_files()
 		end,
-		desc = "Find Files",
+		desc = "Find files",
 	},
 	{
 		"<leader>fr",
 		function()
-			builtin.oldfiles()
+			require("telescope.builtin").oldfiles()
 		end,
-		desc = "Recent Files",
+		desc = "Recent files",
 	},
 	{
 		"<leader>fg",
 		function()
-			builtin.live_grep()
+			require("telescope.builtin").live_grep()
 		end,
-		desc = "Search Workspace",
+		desc = "Search workspace",
 	},
 	{
 		"<leader>fb",
 		function()
-			builtin.buffers()
+			require("telescope.builtin").buffers()
 		end,
-		desc = "Find Buffers",
+		desc = "Find buffers",
 	},
 	{
 		"<leader>fc",
 		function()
-			builtin.commands()
+			require("telescope.builtin").commands()
 		end,
 		desc = "Commands",
 	},
 	{
 		"<leader>fh",
 		function()
-			builtin.help_tags()
+			require("telescope.builtin").help_tags()
 		end,
-		desc = "Help",
+		desc = "Help tags",
 	},
 	{
 		"<leader>fk",
 		function()
-			builtin.keymaps()
+			require("telescope.builtin").keymaps()
 		end,
 		desc = "Keymaps",
 	},
