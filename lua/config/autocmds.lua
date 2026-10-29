@@ -25,6 +25,41 @@ autocmd("TextYankPost", {
 	end,
 })
 
+-- LSP Progress notifications
+autocmd("LspProgress", {
+	group = group,
+	pattern = "*",
+	callback = function(ev)
+		local client = vim.lsp.get_client_by_id(ev.data.client_id)
+		if not client then
+			return
+		end
+
+		local progress = ev.data.progress
+		if not progress then
+			return
+		end
+
+		local message = progress.message or ""
+		local percentage = progress.percentage or 0
+		local title = progress.title or "LSP"
+
+		if percentage > 0 then
+			vim.notify(
+				string.format("%s: %s (%d%%)", title, message, percentage),
+				vim.log.levels.INFO,
+				{ title = "LSP Progress" }
+			)
+		else
+			vim.notify(
+				string.format("%s: %s", title, message),
+				vim.log.levels.INFO,
+				{ title = "LSP Progress" }
+			)
+		end
+	end,
+})
+
 -- Treesitter highlighting is a consumer of the parser subsystem (ADR-003).
 -- Neovim core does not enable it for every filetype, so Perpend starts it
 -- explicitly. `pcall` keeps filetypes without an installed parser quiet.

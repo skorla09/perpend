@@ -11,7 +11,7 @@ The authoritative operational rules are in **`docs/handbook/agent-guide.md`** �
 - **Establish the reference first.** Search the repo, read docs/ADRs, inspect the implementation, and consult current authoritative external docs before proposing changes. Never assume the roadmap changed or a decision was never made.
 - **Source-of-truth order:** current implementation → ADRs → Handbook → external authoritative docs → this file. If sources conflict, stop and investigate.
 - **Two passes:** first understand (no modifications), then implement the smallest appropriate change.
-- **Milestones:** the roadmap (`docs/handbook/roadmap.md`) is authoritative — **Phase I — Foundation** is complete; **Phase II — Developer Productivity** is current. Never create a competing roadmap or invent project history.
+- **Milestones:** the roadmap (`docs/handbook/roadmap.md`) is authoritative — **Phase I — Foundation** is complete; **Phase II — Developer Productivity** is complete; **Phase III — User Experience** is current. Never create a competing roadmap or invent project history.
 - **Documentation is part of the product:** update affected docs with changes; record significant research in `handbook/research-notes.md` and decisions in ADRs. Every keymap needs a `desc`.
 - **Stay in scope:** minimal changes, no silent direction changes; ask when uncertainty is high.
 
@@ -33,7 +33,7 @@ Every plugin follows a **3-file pattern applied as-needed**:
 | `lua/config/<name>.lua`  | Setup options — returned table consumed by `opts` or `config()`        | Only if the plugin needs options |
 | `lua/keymaps/<name>.lua` | Key mappings — returned table for `keys`, or function for `on_attach`  | Only if the plugin has keymaps   |
 
-Create config/keymaps files only when the plugin actually needs them. For example, `mini.pairs` has no keymaps file (handled internally) and no config file (uses defaults). `startup.nvim` has no config file (uses built-in dashboard theme).
+Create config/keymaps files only when the plugin actually needs them. For example, `mini.pairs` has no keymaps file (handled internally) and no config file (uses defaults).
 
 Disabled config is left in place as commented-out lines with the reason (see neo-tree, telescope, which-key below).
 
@@ -54,18 +54,18 @@ Disabled config is left in place as commented-out lines with the reason (see neo
 | gitsigns.nvim         | `keymaps/git/gitsigns.lua` (on_attach)| `config/gitsigns.lua`         | `lazy = false`, v2.0 on_attach pattern                                                                   |
 | telescope.nvim        | `keymaps/find/telescope.lua`          | —                             | `config/telescope.lua` exists but is **disabled** (setup call + fzf extension commented out)             |
 | neo-tree.nvim         | `keymaps/explorer/neo-tree.lua`       | —                             | `<leader>e` toggle, `<leader>E` focus; `config/neo-tree.lua` is **disabled** (opts line commented out)    |
-| which-key.nvim        | —                                     | `config/which-key.lua`        | v3 spec format; `keymaps/which-key.lua` exists but is **unused** (`keys` commented out, "PROBABLY NOT NEEDED") |
+| which-key.nvim        | `keymaps/which-key.lua`               | `config/which-key.lua`        | v3 spec format; `<leader>?` shows buffer-local keymaps                                                  |
 | nvim-treesitter       | —                                     | `config/treesitter.lua`       | New setup + install API (no `configs.setup()`)                                                           |
 | nvim-treesitter-textobjects | `keymaps/language/textobjects.lua` | —                            | Select/move via treesitter queries, `vim.g.no_plugin_maps = true`                                        |
 | nvim-ts-autotag       | —                                     | `config/autotag.lua`          | New standalone setup API (opts nested)                                                                   |
-| lualine.nvim          | —                                     | `config/lualine.lua`          | Statusline, `theme = "auto"`                                                                             |
+| lualine.nvim          | —                                     | `config/lualine.lua`          | Statusline, enhanced with sections and separators                                                        |
 | kanagawa.nvim         | —                                     | `config/kanagawa.lua`         | Active colorscheme (dragon), `lazy = false`, `priority = 1000`                                           |
 | smear-cursor.nvim     | —                                     | `config/smear-cursor.lua`     | Cursor animation                                                                                         |
-| startup.nvim          | —                                     | —                             | Startup dashboard, built-in theme; deps: telescope, plenary, telescope-file-browser                     |
+| snacks.nvim           | —                                     | —                             | Dashboard + notifier (inline config in plugin spec), `lazy = false`, `priority = 1000`                    |
 | vim-fugitive          | `keymaps/git/fugitive.lua`            | —                             | Git, cmd-triggered (`Git`, `G`, `Gwrite`, ...) + `<leader>gS`                                            |
 | nvim-highlight-colors | —                                     | `config/highlight-colors.lua` | Color value highlighting                                                                                 |
-| catppuccin.nvim       | —                                     | —                             | Available for switching (`lazy = false`, `priority = 1`)                                                 |
-| tokyonight.nvim       | —                                     | —                             | Available for switching (`lazy = false`, `priority = 1`)                                                 |
+| catppuccin.nvim       | —                                     | —                             | Available for switching (`lazy = false`, `priority = 1000`)                                              |
+| tokyonight.nvim       | —                                     | —                             | Available for switching (`lazy = false`, `priority = 1000`)                                              |
 | mini.pairs            | —                                     | —                             | Auto-pairs, `nvim-mini/mini.pairs`, event-triggered, uses defaults                                       |
 | nvim-lint             | `keymaps/code/nvim-lint.lua`          | `config/nvim-lint.lua`        | Linter, triggers on BufWritePost/InsertLeave, all calls wrapped in pcall                                 |
 | nvim-lspconfig        | —                                     | `config/lsp.lua`              | `lazy = false`, enables servers via `vim.lsp.enable()` loop, per-server configs in `lsp/*.lua`           |
@@ -98,7 +98,7 @@ end
 
 ## Keymaps (Global)
 
-Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`.
+Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`, `ui`.
 
 **`lua/keymaps/defaults.lua`:**
 
@@ -117,7 +117,12 @@ Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`.
 
 **`lua/keymaps/language/lsp.lua`:** gd, gD, `<leader>lr` rename, `<leader>la` code actions. Neovim 0.12's default `K`, `gra`, `gri`, `grn`, `grr`, `grt`, and `grx` are intentionally left untouched.
 
-**Which-key groups** (`config/which-key.lua`): `<leader>g` Git, `<leader>l` Language, `<leader>f` Find, `<leader>c` Code. Empty groups are added only when their Phase II feature exists.
+**`lua/keymaps/ui.lua`:**
+
+- `<leader>uc` = Cycle colorscheme
+- `<leader>us` = Show current colorscheme
+
+**Which-key groups** (`config/which-key.lua`): `<leader>g` Git, `<leader>l` Language, `<leader>f` Find, `<leader>c` Code, `<leader>u` UI. Empty groups are added only when their feature exists.
 
 ## Important Conventions
 
@@ -125,7 +130,7 @@ Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`.
 - **LSP**: Use `vim.lsp.enable()` + `vim.lsp.config()`, NOT `require("lspconfig").X.setup()`
 - **nvim-lspconfig**: Installed for utility commands (`:LspInfo`) only — server configs use native `vim.lsp.enable()` + `vim.lsp.config()`, NOT `require("lspconfig").X.setup()`. Per-server configs in `lsp/*.lua` are consumed natively by Neovim 0.12+
 - **Gitsigns**: `lazy = false` (must load at startup), keymaps via `on_attach`
-- **Treesitter**: Uses new `nvim-treesitter/nvim-treesitter` with `setup()` + `install()` API (no `configs.setup()`). Highlighting is a consumer responsibility: `config/autocmds.lua` calls `pcall(vim.treesitter.start, 0)` on `FileType` (ADR-003, N-008)
+- **Treesitter**: Uses new `nvim-treesitter/nvim-treesitter` with `setup()` + `install()` API (no `configs.setup()`). Highlighting is a consumer responsibility: `config/autocmds.lua` calls `pcall(vim.treesitter.start, 0)` on `FileType` (ADR-003, N-018)
 - **nvim-ts-autotag**: Uses new standalone setup with nested `opts` key
 - **lualine**: `theme = "auto"` (auto-detects colorscheme)
 - **lsp-file-operations**: Must list neo-tree as dependency for correct loading order
@@ -138,7 +143,7 @@ Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`.
 - **Decisions**: significant architectural decisions go in `docs/adr/`; engineering rationale in the Handbook; research findings in `handbook/research-notes.md`
 - **Node.js**: `vim.g.node_host_prog` set inline in `lua/config/lazy.lua` only when `exepath("node")` returns a path. A standalone Node.js path management utility (`lua/config/nodejs.lua`) exists but is not loaded by default — available for manual use or future integration
 - **Lockfile**: `lazy-lock.json` is committed (ADR-005). Update plugins with `:Lazy update` and commit the lockfile with the related change
-- **Lazy-loaded keymaps**: require plugin modules inside the keymap callbacks, never at file scope; lazy.nvim evaluates `keys` during spec loading (N-009)
+- **Lazy-loaded keymaps**: require plugin modules inside the keymap callbacks, never at file scope; lazy.nvim evaluates `keys` during spec loading (N-019)
 
 ## File Structure
 
@@ -176,6 +181,7 @@ Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`.
 │   │   ├── autocmds.lua
 │   │   ├── autotag.lua
 │   │   ├── blink.lua
+│   │   ├── colorschemes.lua
 │   │   ├── conform.lua
 │   │   ├── diagnostics.lua
 │   │   ├── gitsigns.lua
@@ -210,12 +216,14 @@ Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`.
 │   │   │   └── textobjects.lua
 │   │   ├── defaults.lua
 │   │   ├── init.lua
+│   │   ├── ui.lua
 │   │   └── which-key.lua
 │   └── plugins/
 │       ├── autotag.lua
 │       ├── blink.lua
 │       ├── catppuccin.lua
 │       ├── conform.lua
+│       ├── dashboard.lua
 │       ├── fugitive.lua
 │       ├── gitsigns.lua
 │       ├── highlight-colors.lua
@@ -227,7 +235,7 @@ Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`.
 │       ├── neo-tree.lua
 │       ├── nvim-lint.lua
 │       ├── smear_cursor.lua
-│       ├── startup.lua
+│       ├── startup.lua (disabled)
 │       ├── telescope.lua
 │       ├── tokyonight.lua
 │       ├── treesitter-textobjects.lua

@@ -1,6 +1,6 @@
 -- nvim-ts-autotag reads its options from the nested `opts` table.
 -- The defaults are stated explicitly so the behavior is reviewable.
--- See `docs/handbook/research-notes.md` (N-010).
+-- See `docs/handbook/research-notes.md` (N-020).
 return {
 	opts = {
 		enable_close = true,

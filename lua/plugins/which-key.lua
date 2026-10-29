@@ -5,6 +5,6 @@ return {
 		opts = function()
 			return require("config.which-key")
 		end,
-		--          keys = require("keymaps.which-key"),
+		keys = require("keymaps.which-key"),
 	},
 }

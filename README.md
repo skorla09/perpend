@@ -67,7 +67,12 @@ Each layer depends on the ones beneath it while remaining responsible only for i
 - Keymap architecture with ADR documentation
 - Perpend Handbook
 
-**Phase II — Developer Productivity** is in progress.
+**Phase II — Developer Productivity** is complete.
+
+- Git integration (gitsigns.nvim + vim-fugitive)
+- Integration patterns documented for terminal, session, debugging, task runners, and testing
+
+**Phase III — User Experience** is next.
 
 ---
 
