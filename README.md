@@ -143,6 +143,31 @@ The installer:
 
 Set `SKIP_BACKUP=1` to remove an existing config instead of backing it up.
 
+### Update
+
+Apply the latest runtime configuration to an existing installation:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/skorla09/perpend/main/update.sh)
+```
+
+From a local clone, pull first and update from that checkout:
+
+```bash
+git pull
+bash update.sh --source .
+```
+
+The updater:
+
+- refuses to run when no Perpend installation exists (use `install.sh` for a fresh install),
+- backs up the existing config to `<path>.bak.<timestamp>`,
+- replaces `init.lua`, `lua/`, `lsp/`, and `lazy-lock.json`,
+- leaves other files in the config directory untouched,
+- supports `--dry-run` to preview changes before writing anything.
+
+If you cloned the repository directly to `~/.config/nvim`, update it with `git pull` instead.
+
 ### Clone (to contribute)
 
 Clone the full repository, including documentation and architecture decision records.
@@ -235,6 +260,7 @@ perpend/
 ├── init.lua                 # Entry point
 ├── lazy-lock.json           # Pinned plugin versions (committed)
 ├── install.sh               # Installation script
+├── update.sh                # Update script for existing installations
 ├── AGENTS.md                # Agent operating rules
 ├── lsp/
 │   └── lua_ls.lua           # Per-server LSP config

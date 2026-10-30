@@ -41,6 +41,8 @@ The directories mirror the separation:
 - `init.lua` — the single entry point; loads `config.lazy`.
 - `lua/config/lazy.lua` — bootstraps lazy.nvim, loads the global config and keymaps, then calls `require("lazy").setup("plugins")`.
 - `lazy-lock.json` — pinned plugin versions managed by lazy.nvim. It is committed so installations are reproducible (`ADR-005`).
+- `install.sh` — installs the runtime files into the Neovim config directory.
+- `update.sh` — applies the latest runtime files to an existing installation, keeping a backup.
 - `docs/` — the Handbook and Architecture Decision Records.
 - `lsp/` — per-server configs for native LSP (`vim.lsp.config()`).
 - `scripts/smoke.sh` — headless startup test.
