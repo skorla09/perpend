@@ -110,7 +110,7 @@ One file per language server, consumed natively by `vim.lsp.config()`.
 | ---- | ------ |
 | `lsp/lua_ls.lua` | Lua (`lua-language-server`) |
 
-Remaining servers (`ts_ls`, `html`, `cssls`) use `nvim-lspconfig`'s built-in defaults and therefore have no per-server file.
+Remaining servers (`vtsls`, `html`, `cssls`) use `nvim-lspconfig`'s built-in defaults and therefore have no per-server file.
 
 ---
 

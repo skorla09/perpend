@@ -138,7 +138,7 @@ check_optional_dependencies() {
 
     for command_name in \
         lua-language-server \
-        typescript-language-server \
+        vtsls \
         vscode-html-language-server \
         vscode-css-language-server; do
         check_optional_command "$command_name"

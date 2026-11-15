@@ -100,7 +100,7 @@ Perpend does not use Mason. Install these manually:
 | Language   | Binary                        |
 | ---------- | ----------------------------- |
 | Lua        | `lua-language-server`         |
-| TypeScript | `typescript-language-server`  |
+| TypeScript | `vtsls`                       |
 | HTML       | `vscode-html-language-server` |
 | CSS        | `vscode-css-language-server`  |
 

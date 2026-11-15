@@ -84,13 +84,13 @@ One config file per server in `lsp/` — loaded by Neovim's native LSP system on
 | ---------------- | --------------------- | -------------------------------------------------------------- |
 | `lsp/lua_ls.lua` | Lua                   | `lua-language-server`                                          |
 
-The remaining servers (`ts_ls`, `html`, `cssls`) use nvim-lspconfig's built-in configs.
+The remaining servers (`vtsls`, `html`, `cssls`) use nvim-lspconfig's built-in configs.
 
 Servers enabled via `config/lsp.lua` loaded by the `nvim-lspconfig` plugin (`lazy = false`):
 
 ```lua
 -- lua/config/lsp.lua
-local servers = { "lua_ls", "ts_ls", "html", "cssls" }
+local servers = { "lua_ls", "vtsls", "html", "cssls" }
 for _, server in ipairs(servers) do
     pcall(vim.lsp.enable, server)
 end
