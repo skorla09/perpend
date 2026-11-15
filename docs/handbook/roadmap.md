@@ -57,9 +57,10 @@ Areas of focus include:
 - Statusline
 - Notifications
 - Which-Key integration
-- Session management
 - Startup experience
 - User interface consistency
+
+Session persistence is not a Phase III deliverable. It remains a documented integration pattern (N-012) rather than a default feature, consistent with Phase II's minimalism decision (M-009).
 
 This phase focuses on making Perpend feel intuitive, predictable, and pleasant to use every day.
 
@@ -74,6 +75,7 @@ With the architecture and user experience established, the project can focus on 
 Areas of focus include:
 
 - Installation experience
+- Framework-aware language servers (Vue, Svelte, Astro, MDX) and a "missing server" install hint, so Perpend can handle any JS framework
 - Repository organization
 - Release process
 - Documentation improvements
@@ -122,9 +124,9 @@ These principles serve as the project's definition of quality.
 
 ## Current Status
 
-Perpend has completed **Phase II — Developer Productivity**.
+Perpend has completed **Phase III — User Experience** and is currently working on **Phase IV — Release & Distribution**.
 
-The project's architecture, documentation, and core development workflow have been established:
+Phases I and II established the architecture, documentation, and core development workflow:
 
 - Project architecture and layered organization
 - Native LSP with servers on `$PATH` (ADR-004)
@@ -137,7 +139,17 @@ The project's architecture, documentation, and core development workflow have be
 - Perpend Handbook, complete with Style Guide, Folder Structure, Plugin Guidelines, Milestones, Research Notes, Agent Guide, and Integration Patterns
 - Startup smoke test (`scripts/smoke.sh`)
 
-The next step is **Phase III — User Experience**, which focuses on dashboard, statusline, notifications, which-key integration, session management, startup experience, and user interface consistency.
+Phase III delivered a cohesive editing experience:
+
+- Dashboard replacement via snacks.nvim (N-013)
+- Enhanced statusline via lualine.nvim (N-014)
+- Notification system with LSP progress reporting (N-015)
+- Which-Key enabled for buffer-local keymap discovery (N-016)
+- UI consistency through a colorscheme switcher (N-017)
+
+Phase III is complete as of 2026-11-15. The remaining interactive checks in the OpenSpec change sets are manual UI confirmations and are tracked there.
+
+**Phase IV — Release & Distribution** is now current. The installation experience is already partially in place via `install.sh` and `update.sh`; release process, versioning, and community onboarding remain. Phase IV also carries the framework-aware language server work (Vue, Svelte, Astro, MDX, and missing-server install hints), which supports the distribution's goal of handling any JS framework.
 
 ---
 

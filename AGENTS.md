@@ -11,7 +11,7 @@ The authoritative operational rules are in **`docs/handbook/agent-guide.md`** �
 - **Establish the reference first.** Search the repo, read docs/ADRs, inspect the implementation, and consult current authoritative external docs before proposing changes. Never assume the roadmap changed or a decision was never made.
 - **Source-of-truth order:** current implementation → ADRs → Handbook → external authoritative docs → this file. If sources conflict, stop and investigate.
 - **Two passes:** first understand (no modifications), then implement the smallest appropriate change.
-- **Milestones:** the roadmap (`docs/handbook/roadmap.md`) is authoritative — **Phase I — Foundation** is complete; **Phase II — Developer Productivity** is complete; **Phase III — User Experience** is current. Never create a competing roadmap or invent project history.
+- **Milestones:** the roadmap (`docs/handbook/roadmap.md`) is authoritative — **Phase I — Foundation** is complete; **Phase II — Developer Productivity** is complete; **Phase III — User Experience** is complete; **Phase IV — Release & Distribution** is current. Never create a competing roadmap or invent project history.
 - **Documentation is part of the product:** update affected docs with changes; record significant research in `handbook/research-notes.md` and decisions in ADRs. Every keymap needs a `desc`.
 - **Stay in scope:** minimal changes, no silent direction changes; ask when uncertainty is high.
 
@@ -35,7 +35,7 @@ Every plugin follows a **3-file pattern applied as-needed**:
 
 Create config/keymaps files only when the plugin actually needs them. For example, `mini.pairs` has no keymaps file (handled internally) and no config file (uses defaults).
 
-Disabled config is left in place as commented-out lines with the reason (see neo-tree, telescope, which-key below).
+Disabled config is left in place as commented-out lines with the reason (see neo-tree, telescope, startup below).
 
 ## Entry Point
 
@@ -52,8 +52,8 @@ Disabled config is left in place as commented-out lines with the reason (see neo
 | blink.cmp             | —                                     | `config/blink.lua`            | Completion engine, V1 stable (`version = "1.*"`), `keys` not set (blink handles bindings internally)     |
 | conform.nvim          | `keymaps/code/conform.lua`            | `config/conform.lua`          | Formatter, format on save, `<leader>cf` to format                                                        |
 | gitsigns.nvim         | `keymaps/git/gitsigns.lua` (on_attach)| `config/gitsigns.lua`         | `lazy = false`, v2.0 on_attach pattern                                                                   |
-| telescope.nvim        | `keymaps/find/telescope.lua`          | —                             | `config/telescope.lua` exists but is **disabled** (setup call + fzf extension commented out)             |
-| neo-tree.nvim         | `keymaps/explorer/neo-tree.lua`       | —                             | `<leader>e` toggle, `<leader>E` focus; `config/neo-tree.lua` is **disabled** (opts line commented out)    |
+| telescope.nvim        | `keymaps/find/telescope.lua`          | —                             | `config/telescope.lua` is unused: the spec's `config` block (setup + fzf extension) is commented out       |
+| neo-tree.nvim         | `keymaps/explorer/neo-tree.lua`       | —                             | `<leader>e` toggle, `<leader>E` focus; `config/neo-tree.lua` is unused (spec's `opts` line commented out) |
 | which-key.nvim        | `keymaps/which-key.lua`               | `config/which-key.lua`        | v3 spec format; `<leader>?` shows buffer-local keymaps                                                  |
 | nvim-treesitter       | —                                     | `config/treesitter.lua`       | New setup + install API (no `configs.setup()`)                                                           |
 | nvim-treesitter-textobjects | `keymaps/language/textobjects.lua` | —                            | Select/move via treesitter queries, `vim.g.no_plugin_maps = true`                                        |
@@ -139,7 +139,7 @@ Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`, `ui`.
 - **blink.cmp**: `keys` field NOT set — blink handles keybindings internally via `keymap.preset`; setting `keys` breaks lazy loading
 - **nvim-lint**: Uses `pcall(lint.try_lint)` in autocmds to prevent missing linters from crashing other plugins — triggers on BufWritePost/InsertLeave
 - **Keymaps**: every mapping includes a descriptive `desc` for discoverability and Which-key integration (ADR-001)
-- **Dead config**: disabled/experimental config stays as commented-out lines with an explanatory note (neo-tree opts, telescope setup, which-key keys)
+- **Dead config**: disabled/experimental config stays as commented-out lines with an explanatory note (neo-tree opts, telescope setup, startup declaration)
 - **Decisions**: significant architectural decisions go in `docs/adr/`; engineering rationale in the Handbook; research findings in `handbook/research-notes.md`
 - **Node.js**: `vim.g.node_host_prog` set inline in `lua/config/lazy.lua` only when `exepath("node")` returns a path. A standalone Node.js path management utility (`lua/config/nodejs.lua`) exists but is not loaded by default — available for manual use or future integration
 - **Lockfile**: `lazy-lock.json` is committed (ADR-005). Update plugins with `:Lazy update` and commit the lockfile with the related change
@@ -151,6 +151,10 @@ Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`, `ui`.
 ~/.config/nvim/
 ├── init.lua
 ├── lazy-lock.json
+├── README.md
+├── LICENSE
+├── install.sh
+├── update.sh
 ├── AGENTS.md
 ├── docs/
 │   ├── adr/
@@ -163,6 +167,7 @@ Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`, `ui`.
 │       ├── agent-guide.md
 │       ├── architecture.md
 │       ├── folder-structure.md
+│       ├── integration-patterns.md
 │       ├── milestones.md
 │       ├── philosophy.md
 │       ├── plugin-guidelines.md
@@ -172,6 +177,9 @@ Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`, `ui`.
 │       ├── roadmap.md
 │       ├── style-guide.md
 │       └── vision.md
+├── openspec/
+│   ├── config.yaml
+│   └── changes/
 ├── scripts/
 │   └── smoke.sh
 ├── lsp/

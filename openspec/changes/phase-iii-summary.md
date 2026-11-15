@@ -1,5 +1,9 @@
 # Phase III Implementation Summary
 
+**Status:** Closed — 2026-11-15
+
+**Verification:** `scripts/smoke.sh` passes; plugin specs, keymaps, and LSP clients verified headlessly. Interactive UI checks listed in the change tasks remain manual.
+
 ## Completed Features
 
 ### 1. Dashboard (snacks.nvim)
@@ -63,7 +67,10 @@
 - Which-key enabled
 - Colorscheme switcher functional
 
-## Next Steps
-- Complete remaining testing tasks
-- Update documentation
-- Commit changes when ready
+## Closure
+
+Phase III — User Experience is complete as of **2026-11-15**. All five change sets are implemented and documented; the research notes (N-013–N-017) and lessons in `docs/handbook/milestones.md` preserve the rationale.
+
+Verification: `bash scripts/smoke.sh` passes, the plugin specs load, the Phase III keymaps register, and the LSP clients attach. Remaining unchecked boxes in the individual change sets are interactive checks (notification auto-dismiss and appearance, which-key popup contents, theme-by-theme visual consistency) that require a real UI session; they are noted inline rather than assumed.
+
+Per the project's Phase Completion Test, Phase III is closed and **Phase IV — Release & Distribution** is current. The remaining work is release mechanics plus distribution-facing improvements, including the framework language server work tracked in the roadmap.

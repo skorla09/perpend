@@ -11,9 +11,9 @@ context: |
     - Dead config stays as commented-out lines with notes
     - Research before implementation
     - Minimal change principle
-  Plugins: gitsigns.nvim, vim-fugitive, lualine.nvim, which-key.nvim, nvim-treesitter, telescope.nvim, kanagawa.nvim
+  Plugins: gitsigns.nvim, vim-fugitive, lualine.nvim, which-key.nvim, nvim-treesitter, telescope.nvim, kanagawa.nvim, snacks.nvim
   No Mason — LSP servers on $PATH only
-  Phase I (Foundation) complete, Phase II (Developer Productivity) complete, Phase III (User Experience) current
+  Phase I (Foundation) complete, Phase II (Developer Productivity) complete, Phase III (User Experience) complete, Phase IV (Release & Distribution) current
 
 rules:
   proposal:

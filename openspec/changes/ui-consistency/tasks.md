@@ -17,9 +17,11 @@
 - [x] 3.1 Verify all colorschemes load correctly
 - [x] 3.2 Test colorscheme switching with `<leader>uc`
 - [x] 3.3 Verify visual feedback on switch
-- [ ] 3.4 Check consistency across all themes
+- [ ] 3.4 Check consistency across all themes — manual visual check pending
+
+> Theme-by-theme visual consistency (`3.4`) requires an interactive session and human judgment; the switcher itself is exercised headlessly.
 
 ## 4. Documentation
 
-- [ ] 4.1 Add research note N-017 (UI consistency)
-- [ ] 4.2 Update AGENTS.md plugin table
+- [x] 4.1 Add research note N-017 (UI consistency)
+- [x] 4.2 Update AGENTS.md plugin table

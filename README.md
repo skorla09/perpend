@@ -63,7 +63,6 @@ Each layer depends on the ones beneath it while remaining responsible only for i
 - Treesitter provider subsystem
 - Formatting (conform.nvim) and linting (nvim-lint)
 - Diagnostics and Telescope navigation
-- Git integration (gitsigns.nvim + vim-fugitive)
 - Keymap architecture with ADR documentation
 - Perpend Handbook
 
@@ -72,7 +71,15 @@ Each layer depends on the ones beneath it while remaining responsible only for i
 - Git integration (gitsigns.nvim + vim-fugitive)
 - Integration patterns documented for terminal, session, debugging, task runners, and testing
 
-**Phase III — User Experience** is next.
+**Phase III — User Experience** is complete.
+
+- Dashboard via snacks.nvim (N-013)
+- Enhanced statusline via lualine.nvim (N-014)
+- Notification system with LSP progress reporting (N-015)
+- Which-Key enabled for buffer-local keymap discovery (N-016)
+- UI consistency through a colorscheme switcher (N-017)
+
+**Phase IV — Release & Distribution** is current. `install.sh` and `update.sh` are already available; release process, versioning, and community onboarding remain. Phase IV also covers framework-aware language servers (Vue, Svelte, Astro, MDX) and missing-server install hints.
 
 ---
 
@@ -178,6 +185,25 @@ git clone https://github.com/skorla09/perpend.git ~/.config/nvim
 
 `lazy-lock.json` is committed. Update plugins intentionally with `:Lazy update` and commit the lockfile with the related change (`ADR-005`).
 
+### Developer setup (symlinked config)
+
+If you work on Perpend itself, symlink the checkout instead of copying it. Edits are live and Git remains the source of truth:
+
+```bash
+mv ~/.config/nvim ~/.config/nvim.bak.$(date +%Y%m%d-%H%M%S)
+ln -s ~/Projects/perpend ~/.config/nvim
+```
+
+With a symlinked config:
+
+- edits in the repository take effect on the next Neovim launch;
+- validate before reloading with `bash scripts/smoke.sh` and a headless `nvim` run;
+- treat branch switches, `git stash`, and `git checkout -- .` as live-config edits;
+- update with `git pull` rather than `update.sh`, which refuses symlinks by design;
+- do not run `install.sh` — it would replace the symlink with a standalone copy.
+
+`install.sh` remains the user-facing installation path; the symlink is the maintainer workflow.
+
 ### First launch
 
 Open Neovim and let lazy.nvim install the pinned plugins. Then run `:checkhealth` and `:Lazy` to confirm the setup.
@@ -251,6 +277,16 @@ Leader key is `<Space>`. Neovim 0.12's default LSP mappings are preserved.
 | `<leader>gb` | Toggle blame |
 | `<leader>gd` | Diff this |
 
+### UI
+
+| Key | Action |
+|-----|--------|
+| `<leader>?` | Show buffer-local keymaps (which-key) |
+| `<leader>uc` | Cycle colorscheme |
+| `<leader>us` | Show current colorscheme |
+| `<leader>nd` | Dismiss notification |
+| `<leader>nh` | Notification history |
+
 ---
 
 ## Project Structure
@@ -271,6 +307,7 @@ perpend/
 ├── docs/
 │   ├── adr/                 # Architecture Decision Records
 │   └── handbook/            # Engineering companion
+├── openspec/                # Spec-driven change records
 └── scripts/
     └── smoke.sh             # Startup smoke test
 ```

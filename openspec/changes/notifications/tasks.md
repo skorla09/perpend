@@ -9,11 +9,13 @@
 ## 2. Testing
 
 - [x] 2.1 Verify LSP progress notifications appear
-- [ ] 2.2 Verify notifications auto-dismiss
-- [ ] 2.3 Test manual dismiss and history view
-- [ ] 2.4 Verify notification appearance
+- [ ] 2.2 Verify notifications auto-dismiss — manual UI check pending
+- [ ] 2.3 Test manual dismiss and history view — manual UI check pending
+- [ ] 2.4 Verify notification appearance — manual UI check pending
+
+> Manual UI checks (`2.2`–`2.4`) require an interactive session; the headless smoke test only confirms the notifier options load without errors.
 
 ## 3. Documentation
 
-- [ ] 3.1 Add research note N-015 (notification system)
-- [ ] 3.2 Update AGENTS.md plugin table
+- [x] 3.1 Add research note N-015 (notification system)
+- [x] 3.2 Update AGENTS.md plugin table

@@ -8,10 +8,12 @@
 ## 2. Testing
 
 - [x] 2.1 Verify which-key popup appears on `<leader>?`
-- [ ] 2.2 Check that buffer-local keymaps are displayed
-- [ ] 2.3 Verify groups are shown correctly
+- [ ] 2.2 Check that buffer-local keymaps are displayed — manual UI check pending
+- [ ] 2.3 Verify groups are shown correctly — manual UI check pending
+
+> The `<leader>?` mapping registers and the plugin loads headlessly; the popup contents (`2.2`–`2.3`) require an interactive session.
 
 ## 3. Documentation
 
-- [ ] 3.1 Add research note N-016 (which-key enablement)
-- [ ] 3.2 Update AGENTS.md plugin table
+- [x] 3.1 Add research note N-016 (which-key enablement)
+- [x] 3.2 Update AGENTS.md plugin table

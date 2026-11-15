@@ -317,14 +317,14 @@ Agents must read that document before planning substantial work.
 
 Do not treat any summary in this guide as a replacement for the roadmap.
 
-Perpend has completed **Phase II — Developer Productivity** and is currently working on **Phase III — User Experience**.
+Perpend has completed **Phase III — User Experience** and is currently working on **Phase IV — Release & Distribution**.
 
 The project's phases are:
 
 - **Phase I — Foundation** (complete)
 - **Phase II — Developer Productivity** (complete)
-- **Phase III — User Experience** (current)
-- **Phase IV — Release & Distribution**
+- **Phase III — User Experience** (complete)
+- **Phase IV — Release & Distribution** (current)
 - **Phase V — Continuous Evolution**
 
 The exact scope and readiness criteria for each phase must be verified against `handbook/roadmap.md` before work begins.
