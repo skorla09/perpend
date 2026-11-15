@@ -231,6 +231,9 @@ Each note identifies the relevant version, source, and date so that another engi
 - **Impact:** Perpend adds colorscheme configuration for all themes and a `<leader>uc` keymap to cycle through them. This provides visual feedback and improves discoverability.
 - **Conclusion:** UI consistency adopted with colorscheme switcher. Decision documented in openspec change `ui-consistency`.
 - **Date:** 2026-09-14
+
+---
+
 ## N-018: nvim-treesitter `main` does not enable highlighting
 
 - **Technology:** nvim-treesitter
@@ -280,6 +283,24 @@ Each note identifies the relevant version, source, and date so that another engi
 - **Impact:** Perpend previously defined `gr`, `gi`, and `gt`, which shadowed core behavior (`gi` insert-at-last-position, `gt` next tabpage, and the native `gr*` prefix). Those overrides were removed. The explicit `K` mapping was also removed because it would suppress Neovim's buffer-local hover mapping. `gd` and `gD` remain because Neovim has no default LSP equivalent, and `<leader>lr` / `<leader>la` provide discoverable aliases without shadowing.
 - **Conclusion:** Prefer Neovim defaults for LSP navigation; add leader aliases only where they improve discoverability.
 - **Date:** 2026-10-29
+
+---
+
+## N-022: TypeScript language server — `vtsls` vs `ts_ls` vs `tsc`
+
+- **Technology:** TypeScript language servers (`vtsls`, `typescript-language-server`/`ts_ls`, `tsc --lsp`)
+- **Version Investigated:** `vtsls` current npm release; `typescript-language-server` current; TypeScript 7.0.2; Neovim 0.12.6; `nvim-lspconfig` commit `4b2b045b`
+- **Perpend Version:** — (adopted `vtsls`)
+- **Source:** `yioneko/vtsls` and `typescript-language-server/typescript-language-server` READMEs; Microsoft TypeScript 7 announcement; `nvim-lspconfig` server configs for `vtsls`, `ts_ls`, and `vue_ls`; local headless verification
+- **Finding:**
+  - `vtsls` is a community project by `yioneko` that wraps Microsoft's VS Code TypeScript extension (`extensions/typescript-language-features`). Its README calls it a "best-effort product" that may be "not as reliable as other functionally identical alternatives."
+  - `typescript-language-server` (`ts_ls`) is also community-maintained and states it is "not directly associated with Microsoft."
+  - `tsc` is Microsoft's official TypeScript 7 language server (`tsc --lsp --stdio`), supported by `nvim-lspconfig`'s `tsc` config. It was verified locally: it attaches and exposes completion, hover, rename, code actions, inlay hints, semantic tokens, formatting, definition, and references.
+  - TypeScript 7 has no stable programmatic API, so Vue, Svelte, Astro, MDX, and Angular editor workflows still need TypeScript 6. `nvim-lspconfig`'s `vue_ls` forwards TypeScript requests only to `ts_ls`, `vtsls`, or `typescript-tools` — not `tsc`.
+  - Neovim ecosystem default: LazyVim uses `vtsls` and offers `tsc` as a newer extra.
+- **Impact:** Perpend enables `vtsls` for TypeScript/TSX. The LSP choice does not affect compilation (`tsc` remains the compiler) or formatting (`conform.nvim`). Framework servers are deferred to Phase IV (see `docs/handbook/roadmap.md`).
+- **Conclusion:** Keep `vtsls` as the default because it is the only TypeScript client `vue_ls` can use today, and Perpend's goal is to handle any JS framework. Document `tsc` as an opt-in for plain TypeScript/React projects. Revisit if `vtsls` becomes unmaintained or a TypeScript release restores embedded-language support.
+- **Date:** 2026-11-14
 
 ---
 

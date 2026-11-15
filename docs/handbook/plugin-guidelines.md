@@ -55,7 +55,7 @@ Every plugin follows the **3-file pattern, applied as needed**:
 Examples:
 
 - `mini.pairs` — no keymaps file (bindings handled internally) and no config file (defaults used).
-- `startup.nvim` — no config file (built-in dashboard theme used).
+- `lualine.nvim` — config file (`lua/config/lualine.lua`) and no keymaps file.
 - `gitsigns.nvim` — config file and an `on_attach` keymaps function.
 
 Create a config or keymaps file only when the plugin actually needs it. Do not create empty files.
@@ -90,9 +90,9 @@ Use event, command, key, and filetype triggers only when they do not break requi
 
 Disabled or experimental configuration is left in place as commented-out lines with an explanatory note, rather than deleted silently:
 
-- `config/telescope.lua` — setup call and fzf extension commented out.
-- `config/neo-tree.lua` — `opts` line commented out.
-- `plugins/which-key.lua` — `keys = require("keymaps.which-key")` commented out ("PROBABLY NOT NEEDED").
+- `plugins/telescope.lua` — the `config` block (setup call and fzf extension) is commented out, so `config/telescope.lua` and its fzf extension are unused.
+- `plugins/neo-tree.lua` — the `opts = require("config.neo-tree")` line is commented out, so `config/neo-tree.lua` is unused.
+- `plugins/startup.lua` — the whole declaration is commented out, with a note pointing to the snacks.nvim dashboard replacement.
 
 This preserves context, documents rejections near the decision, and makes re-enabling intentional and cheap.
 
@@ -103,7 +103,6 @@ This preserves context, documents rejections near the decision, and makes re-ena
 A plugin may depend on others only when the dependency is real and justified:
 
 - `lsp-file-operations.nvim` depends on `neo-tree.nvim` for correct loading order.
-- `startup.nvim` depends on `telescope.nvim` and `plenary.nvim`.
 
 List dependencies in the plugin declaration. Never add a dependency merely to bundle convenience.
 

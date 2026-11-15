@@ -117,25 +117,20 @@ return {
 
 ### Dashboard Integration
 
-If using `startup.nvim` or another dashboard, add a "Restore Session" option:
+Perpend's dashboard is configured in `lua/plugins/dashboard.lua` with snacks.nvim. Add a "Restore Session" entry to its `preset.keys` list:
 
 ```lua
--- Example for startup.nvim
+-- lua/plugins/dashboard.lua (snacks.nvim)
 {
-  section = {
-    { type = "text", content = require("startup").utils.logo("dashboard") },
-    { type = "padding", value = 1 },
-    { type = "text", content = "Perpend", options = { hl = "Special" } },
-    { type = "padding", value = 1 },
-    { type = "text", content = "A minimal Neovim distribution", options = { hl = "Comment" } },
-    { type = "padding", value = 2 },
-    {
-      type = "group",
-      items = {
-        { "  ", "Telescope Find Files", "<cmd>Telescope find_files<cr>", { noremap = true, silent = true, nowait = true } },
-        { "  ", "Restore Session", function() require("persistence").load() end, { noremap = true, silent = true, nowait = true } },
-        { "  ", "New File", "ene <BAR> startinsert", { noremap = true, silent = true, nowait = true } },
-        { "  ", "Quit", "<cmd>qa<cr>", { noremap = true, silent = true, nowait = true } },
+  "folke/snacks.nvim",
+  opts = {
+    dashboard = {
+      preset = {
+        keys = {
+          { icon = " ", key = "f", desc = "Find File", action = ":Telescope find_files" },
+          { icon = " ", key = "s", desc = "Restore Session", action = function() require("persistence").load() end },
+          { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+        },
       },
     },
   },

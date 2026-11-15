@@ -66,7 +66,8 @@ The recommended reading order is:
 9. **Milestones** — Lessons learned throughout the project's evolution.
 10. **Architecture Decision Records (ADRs)** — Significant engineering decisions and their rationale.
 11. **Research Notes** — Investigations and evaluations conducted before adopting new technologies.
-12. **Agent Guide** — How agents and contributors operate within the repository.
+12. **Integration Patterns** — Guidance for optional, workflow-dependent features.
+13. **Agent Guide** — How agents and contributors operate within the repository.
 
 Each chapter builds upon the previous one.
 

@@ -106,6 +106,38 @@ _Verified by:_ `docs/handbook/research-notes.md` (N-008 through N-012), `docs/ha
 
 ---
 
+# PHASE III MILESTONES
+
+## M-010: Replace a plugin when a maintained alternative owns the responsibility better
+
+The dashboard was originally built on `startup.nvim` and was replaced with the snacks.nvim dashboard. The evaluation considered maintenance, license, and scope before adding another dependency. `startup.nvim` has lower adoption and a GPL license; snacks.nvim is maintained by the lazy.nvim author and already provides the notifier used for notifications.
+
+**Lesson:** A plugin is not permanent. When a maintained alternative covers the responsibility with better maintenance, licensing, or scope, replacing the dependency is the smaller long-term cost. Record the comparison, not just the outcome.
+
+_Verified by:_ `docs/handbook/research-notes.md` (N-013), `lua/plugins/dashboard.lua`, `lua/plugins/startup.lua`.
+
+---
+
+## M-011: UX providers still follow the provider/consumer split
+
+Notifications consume LSP progress through an autocommand, while the notifier owns presentation. The statusline follows the same pattern: LSP and Git expose state, and lualine renders it. Phase III added user-facing polish without collapsing these boundaries.
+
+**Lesson:** A better user experience does not justify mixing responsibilities. Keep producers and presenters separate so each can change without rewriting the other.
+
+_Verified by:_ `docs/handbook/research-notes.md` (N-014, N-015), `lua/config/autocmds.lua`, `lua/config/lualine.lua`.
+
+---
+
+## M-012: Discoverability is configured, not assumed
+
+Phase III made existing capability visible. `<leader>?` shows buffer-local mappings through which-key, and the colorscheme switcher (`<leader>uc`, `<leader>us`) exposes themes that were already installed but effectively hidden.
+
+**Lesson:** A feature that cannot be found is not yet a feature. When capability already exists, invest in discoverability before adding more capability.
+
+_Verified by:_ `docs/handbook/research-notes.md` (N-016, N-017), `lua/keymaps/which-key.lua`, `lua/keymaps/ui.lua`.
+
+---
+
 # SUSTAINING THIS CHAPTER
 
 New milestones should be appended with a new `M-NNN` number and must point to the artifact that verifies the lesson. A milestone without evidence is a claim, not a lesson.

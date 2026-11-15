@@ -44,6 +44,7 @@ The directories mirror the separation:
 - `install.sh` — installs the runtime files into the Neovim config directory.
 - `update.sh` — applies the latest runtime files to an existing installation, keeping a backup.
 - `docs/` — the Handbook and Architecture Decision Records.
+- `openspec/` — spec-driven change records for substantial features.
 - `lsp/` — per-server configs for native LSP (`vim.lsp.config()`).
 - `scripts/smoke.sh` — headless startup test.
 - Root-level scratch files (`*.tsx`, `*.js`, `*.py`, etc.) are not part of the configuration and are ignored only at the repository root.
@@ -61,10 +62,9 @@ Editor behavior and plugin options.
 | `diagnostics.lua`    | Diagnostics presentation (`vim.diagnostic.config`) |
 | `lsp.lua`            | Enables LSP servers via `vim.lsp.enable()` |
 | `lazy.lua`           | lazy.nvim bootstrap and global requires |
-| `keymaps`-adjacent   | — |
 | `<plugin>.lua`       | Setup options for a plugin, returned as a table for `opts`/`config()` |
 
-Disabled plugin options are left as commented-out lines with the reason (see `telescope.lua`, `neo-tree.lua`).
+Disabled plugin options are left as commented-out lines with the reason (see `plugins/telescope.lua`, `plugins/neo-tree.lua`, `plugins/startup.lua`).
 
 ---
 
@@ -118,7 +118,7 @@ Remaining servers (`vtsls`, `html`, `cssls`) use `nvim-lspconfig`'s built-in def
 
 Preserved knowledge.
 
-- `docs/handbook/` — the Perpend Handbook (philosophy, vision, principles, architecture, roadmap, style guide, folder structure, plugin guidelines, milestones, research notes, agent guide).
+- `docs/handbook/` — the Perpend Handbook (philosophy, vision, principles, architecture, roadmap, style guide, folder structure, plugin guidelines, milestones, research notes, integration patterns, agent guide).
 - `docs/adr/` — Architecture Decision Records (`NNN-topic.md`).
 
 ---
