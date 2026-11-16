@@ -2,6 +2,10 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		version = "*",
+		-- The dashboard actions run ex-commands (`:Telescope find_files`, ...),
+		-- and the command only exists once the plugin loads. This stub makes
+		-- lazy.nvim load Telescope on first use without touching startup.
+		cmd = "Telescope",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			-- Optional native sorter, left disabled on purpose: it needs a C

@@ -52,7 +52,7 @@ Disabled config is left in place as commented-out lines with the reason (see neo
 | blink.cmp             | —                                     | `config/blink.lua`            | Completion engine, V1 stable (`version = "1.*"`), `keys` not set (blink handles bindings internally)     |
 | conform.nvim          | `keymaps/code/conform.lua`            | `config/conform.lua`          | Formatter, format on save, `<leader>cf` to format                                                        |
 | gitsigns.nvim         | `keymaps/git/gitsigns.lua` (on_attach)| `config/gitsigns.lua`         | `lazy = false`, v2.0 on_attach pattern                                                                   |
-| telescope.nvim        | `keymaps/find/telescope.lua`          | `config/telescope.lua`        | `opts` applies the config table (`<C-j>`/`<C-k>` selection); optional fzf-native sorter stays disabled   |
+| telescope.nvim        | `keymaps/find/telescope.lua`          | `config/telescope.lua`        | `opts` applies `<C-j>`/`<C-k>`; `cmd = "Telescope"` serves dashboard actions; fzf sorter disabled        |
 | neo-tree.nvim         | `keymaps/explorer/neo-tree.lua`       | —                             | `<leader>e` toggle, `<leader>E` focus; `config/neo-tree.lua` is unused (spec's `opts` line commented out) |
 | which-key.nvim        | `keymaps/which-key.lua`               | `config/which-key.lua`        | v3 spec format; `<leader>?` shows buffer-local keymaps                                                  |
 | nvim-treesitter       | —                                     | `config/treesitter.lua`       | New setup + install API (no `configs.setup()`)                                                           |
