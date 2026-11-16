@@ -91,8 +91,9 @@ Use event, command, key, and filetype triggers only when they do not break requi
 Disabled or experimental configuration is left in place as commented-out lines with an explanatory note, rather than deleted silently:
 
 - `plugins/telescope.lua` — the optional `telescope-fzf-native.nvim` dependency is commented out with the reason, so the native sorter stays disabled (`config/telescope.lua` is wired through `opts`).
-- `plugins/neo-tree.lua` — the `opts = require("config.neo-tree")` line is commented out, so `config/neo-tree.lua` is unused.
 - `plugins/startup.lua` — the whole declaration is commented out, with a note pointing to the snacks.nvim dashboard replacement.
+
+Neo-tree is the counter-example: it runs on upstream defaults by design, so it has no config file and no commented `opts` line. A no-op config was removed rather than left in place, because nothing was disabled or deferred.
 
 This preserves context, documents rejections near the decision, and makes re-enabling intentional and cheap.
 

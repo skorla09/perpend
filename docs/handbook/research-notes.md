@@ -85,7 +85,7 @@ Each note identifies the relevant version, source, and date so that another engi
 - **Perpend Version:** current
 - **Source:** Project conventions documented in `AGENTS.md`
 - **Finding:** Disabled or experimental configuration kept as commented-out lines with an explanatory note preserves context and makes re-enabling intentional. Examples: `config/telescope.lua` (setup + fzf extension commented out), `config/neo-tree.lua` (`opts` commented out), `plugins/which-key.lua` (`keys` commented out).
-  - **Update (2026-11-16):** The telescope example is obsolete — `config/telescope.lua` is now wired through `opts`; only the optional fzf sorter remains commented out. See N-023.
+  - **Update (2026-11-16):** The telescope example is obsolete — `config/telescope.lua` is now wired through `opts`; only the optional fzf sorter remains commented out. See N-023. The neo-tree example is also obsolete: `config/neo-tree.lua` was a no-op (sole setting `hijack_netrw_behavior = "open_default"` is already the default) and was deleted, so neo-tree now runs on upstream defaults with no config file. The convention still stands for genuinely disabled config such as `plugins/startup.lua`.
 - **Impact:** Contributors find rejected or deferred options next to their decision instead of lost to history.
 - **Conclusion:** Keep the convention; captured in `plugin-guidelines.md`.
 - **Date:** 2026-08-19

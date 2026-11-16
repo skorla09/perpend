@@ -64,7 +64,7 @@ Editor behavior and plugin options.
 | `lazy.lua`           | lazy.nvim bootstrap and global requires |
 | `<plugin>.lua`       | Setup options for a plugin, returned as a table for `opts`/`config()` |
 
-Disabled plugin options are left as commented-out lines with the reason (see the optional fzf sorter in `plugins/telescope.lua`, `plugins/neo-tree.lua`, `plugins/startup.lua`).
+Disabled plugin options are left as commented-out lines with the reason (see the optional fzf sorter in `plugins/telescope.lua` and the disabled `plugins/startup.lua`).
 
 ---
 

@@ -35,7 +35,7 @@ Every plugin follows a **3-file pattern applied as-needed**:
 
 Create config/keymaps files only when the plugin actually needs them. For example, `mini.pairs` has no keymaps file (handled internally) and no config file (uses defaults).
 
-Disabled config is left in place as commented-out lines with the reason (see neo-tree, telescope, startup below).
+Disabled config is left in place as commented-out lines with the reason (see telescope and startup below).
 
 ## Entry Point
 
@@ -53,7 +53,7 @@ Disabled config is left in place as commented-out lines with the reason (see neo
 | conform.nvim          | `keymaps/code/conform.lua`            | `config/conform.lua`          | Formatter, format on save, `<leader>cf` to format                                                        |
 | gitsigns.nvim         | `keymaps/git/gitsigns.lua` (on_attach)| `config/gitsigns.lua`         | `lazy = false`, v2.0 on_attach pattern                                                                   |
 | telescope.nvim        | `keymaps/find/telescope.lua`          | `config/telescope.lua`        | `opts` applies `<C-j>`/`<C-k>`; `cmd = "Telescope"` serves dashboard actions; fzf sorter disabled        |
-| neo-tree.nvim         | `keymaps/explorer/neo-tree.lua`       | —                             | `<leader>e` toggle, `<leader>E` focus; `config/neo-tree.lua` is unused (spec's `opts` line commented out) |
+| neo-tree.nvim         | `keymaps/explorer/neo-tree.lua`       | —                             | `<leader>e` toggle, `<leader>E` focus; runs on upstream defaults (no config file)                        |
 | which-key.nvim        | `keymaps/which-key.lua`               | `config/which-key.lua`        | v3 spec format; `<leader>?` shows buffer-local keymaps                                                  |
 | nvim-treesitter       | —                                     | `config/treesitter.lua`       | New setup + install API (no `configs.setup()`)                                                           |
 | nvim-treesitter-textobjects | `keymaps/language/textobjects.lua` | —                            | Select/move via treesitter queries, `vim.g.no_plugin_maps = true`                                        |
@@ -139,7 +139,7 @@ Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`, `ui`.
 - **blink.cmp**: `keys` field NOT set — blink handles keybindings internally via `keymap.preset`; setting `keys` breaks lazy loading
 - **nvim-lint**: Uses `pcall(lint.try_lint)` in autocmds to prevent missing linters from crashing other plugins — triggers on BufWritePost/InsertLeave
 - **Keymaps**: every mapping includes a descriptive `desc` for discoverability and Which-key integration (ADR-001)
-- **Dead config**: disabled/experimental config stays as commented-out lines with an explanatory note (neo-tree opts, telescope fzf sorter, startup declaration)
+- **Dead config**: disabled/experimental config stays as commented-out lines with an explanatory note (telescope fzf sorter, startup declaration)
 - **Decisions**: significant architectural decisions go in `docs/adr/`; engineering rationale in the Handbook; research findings in `handbook/research-notes.md`
 - **Node.js**: `vim.g.node_host_prog` set inline in `lua/config/lazy.lua` only when `exepath("node")` returns a path. A standalone Node.js path management utility (`lua/config/nodejs.lua`) exists but is not loaded by default — available for manual use or future integration
 - **Lockfile**: `lazy-lock.json` is committed (ADR-005). Update plugins with `:Lazy update` and commit the lockfile with the related change
@@ -198,7 +198,6 @@ Loaded by `keymaps/init.lua`: `defaults`, `diagnostics`, `language.lsp`, `ui`.
 │   │   ├── lazy.lua
 │   │   ├── lsp.lua
 │   │   ├── lualine.lua
-│   │   ├── neo-tree.lua
 │   │   ├── nodejs.lua
 │   │   ├── nvim-lint.lua
 │   │   ├── options.lua

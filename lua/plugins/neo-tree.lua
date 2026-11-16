@@ -8,5 +8,6 @@ return {
 	},
 	lazy = false,
 	keys = require("keymaps.explorer.neo-tree"),
-	--    opts = require("config.neo-tree"),
+	-- No opts on purpose: upstream defaults are used, so there is no config
+	-- file to wire (N-006).
 }
