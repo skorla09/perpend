@@ -70,7 +70,7 @@ Deleting disabled or experimental configuration loses the context of a decision.
 
 **Lesson:** When an option is disabled or deferred, keep it in place with an explanatory comment. The decision's history becomes part of the codebase.
 
-_Verified by:_ `config/telescope.lua`, `config/neo-tree.lua`, `plugins/which-key.lua`, `plugin-guidelines.md`.
+_Verified by:_ `plugins/telescope.lua` (fzf sorter), `config/neo-tree.lua`, `plugins/which-key.lua`, `plugin-guidelines.md`.
 
 ---
 

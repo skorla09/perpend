@@ -85,6 +85,7 @@ Each note identifies the relevant version, source, and date so that another engi
 - **Perpend Version:** current
 - **Source:** Project conventions documented in `AGENTS.md`
 - **Finding:** Disabled or experimental configuration kept as commented-out lines with an explanatory note preserves context and makes re-enabling intentional. Examples: `config/telescope.lua` (setup + fzf extension commented out), `config/neo-tree.lua` (`opts` commented out), `plugins/which-key.lua` (`keys` commented out).
+  - **Update (2026-11-16):** The telescope example is obsolete — `config/telescope.lua` is now wired through `opts`; only the optional fzf sorter remains commented out. See N-023.
 - **Impact:** Contributors find rejected or deferred options next to their decision instead of lost to history.
 - **Conclusion:** Keep the convention; captured in `plugin-guidelines.md`.
 - **Date:** 2026-08-19
@@ -301,6 +302,24 @@ Each note identifies the relevant version, source, and date so that another engi
 - **Impact:** Perpend enables `vtsls` for TypeScript/TSX. The LSP choice does not affect compilation (`tsc` remains the compiler) or formatting (`conform.nvim`). Framework servers are deferred to Phase IV (see `docs/handbook/roadmap.md`).
 - **Conclusion:** Keep `vtsls` as the default because it is the only TypeScript client `vue_ls` can use today, and Perpend's goal is to handle any JS framework. Document `tsc` as an opt-in for plain TypeScript/React projects. Revisit if `vtsls` becomes unmaintained or a TypeScript release restores embedded-language support.
 - **Date:** 2026-11-14
+
+---
+
+## N-023: Telescope configuration — `opts` contract and fzf-native under lazy.nvim
+
+- **Technology:** telescope.nvim, telescope-fzf-native.nvim, lazy.nvim
+- **Version Investigated:** telescope.nvim `v0.2.2` (`5255aa27`), telescope-fzf-native.nvim `main` (last push 2026-05-06), lazy.nvim `main` (`306a0552`), Neovim 0.12.6 (LuaJIT)
+- **Perpend Version:** Neovim 0.12.2–0.12.6 with the same plugin commits
+- **Source:** telescope.nvim `README.md` at `v0.2.2` and on `master`, telescope-fzf-native.nvim `README.md`, lazy.nvim plugin-spec documentation, and headless verification against the installed plugins
+- **Finding:**
+  - The `README.md` shipped with `v0.2.2` requires Neovim > 0.10.4 compiled with LuaJIT; `master` raises that floor to >= 0.11.7. No Neovim 0.12-specific setup API exists: `require("telescope").setup(opts)` remains the entry point and only forwards `defaults`, `pickers`, and `extensions` to `telescope.config`.
+  - lazy.nvim treats `opts` as implying the default `config`, which calls `require(MAIN).setup(opts)`. A hand-written `config` replaces that default, so `setup(opts)` must then be called manually — mixing both paths invites double setup with divergent tables.
+  - The previous `opts = {}` made lazy.nvim call `setup({})`, leaving `config/telescope.lua` unread: `telescope.config.values.mappings.i` stayed empty. Passing the module instead (`opts = require("config.telescope")`) yields `<C-j>`/`<C-k>` = `move_selection_next`/`move_selection_previous`, verified after loading the spec through `require("lazy").load()`.
+  - telescope-fzf-native.nvim is optional and must be compiled at install time with `make` or CMake; upstream ships no binaries. `require("telescope").load_extension("fzf")` raises `'fzf' extension doesn't exist or isn't installed` when the dependency is absent, and the `extensions.fzf` table passed to `setup()` is inert until the extension is loaded.
+  - Telescope's `:checkhealth` passes on this machine with plenary, ripgrep 15.2.0, and fd 10.5.0 detected; `find_files` opens and lists results on Neovim 0.12.6.
+- **Impact:** Perpend wires the existing `config/telescope.lua` through `opts` and keeps the optional fzf-native sorter commented out with its reason. Enabling it would add a `make` + C compiler requirement to every install, conflicting with the portable install workflow; if it is enabled later, it needs `build = "make"` plus a `pcall`-guarded `load_extension("fzf")` so a missing build degrades to the Lua sorter instead of erroring on every picker.
+- **Conclusion:** Telescope is required by `keymaps/find/telescope.lua` (the only picker in Perpend) and is still maintained. Configure it through `opts`, not a hand-written `config` that re-calls `setup()`. Revisit fzf-native only if fuzzy-match throughput becomes a measured problem. Supersedes the telescope example in N-006.
+- **Date:** 2026-11-16
 
 ---
 

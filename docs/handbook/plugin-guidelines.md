@@ -90,7 +90,7 @@ Use event, command, key, and filetype triggers only when they do not break requi
 
 Disabled or experimental configuration is left in place as commented-out lines with an explanatory note, rather than deleted silently:
 
-- `plugins/telescope.lua` — the `config` block (setup call and fzf extension) is commented out, so `config/telescope.lua` and its fzf extension are unused.
+- `plugins/telescope.lua` — the optional `telescope-fzf-native.nvim` dependency is commented out with the reason, so the native sorter stays disabled (`config/telescope.lua` is wired through `opts`).
 - `plugins/neo-tree.lua` — the `opts = require("config.neo-tree")` line is commented out, so `config/neo-tree.lua` is unused.
 - `plugins/startup.lua` — the whole declaration is commented out, with a note pointing to the snacks.nvim dashboard replacement.
 
