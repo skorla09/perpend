@@ -1,16 +1,13 @@
 return {
-    {
-        "stevearc/conform.nvim",
+	{
+		"stevearc/conform.nvim",
+		event = "BufWritePre",
 
-        event = "BufWritePre",
+		cmd = {
+			"ConformInfo",
+		},
 
-        cmd = {
-            "ConformInfo",
-        },
-
-        keys = require("keymaps.code.conform"),
-
-        opts = require("config.conform"),
-    },
+		keys = require("keymaps.code.conform"),
+		opts = require("config.conform"),
+	},
 }
-
