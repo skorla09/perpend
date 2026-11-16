@@ -5,7 +5,7 @@ return {
 		typescript = { "eslint_d" },
 		typescriptreact = { "eslint_d" },
 
-		markdown = { "markdownlint-cli2" },
+		---		markdown = { "markdownlint-cli2" },
 
 		sh = { "shellcheck" },
 		zsh = { "shellcheck" },
