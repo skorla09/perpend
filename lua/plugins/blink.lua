@@ -1,16 +1,16 @@
 return {
-    {
-        "saghen/blink.cmp",
-        version = "1.*",
+	{
+		"saghen/blink.cmp",
+		version = "1.*",
 
-        dependencies = {
-            "rafamadriz/friendly-snippets",
-        },
+		dependencies = {
+			"rafamadriz/friendly-snippets",
+		},
 
-        opts = require("config.blink"),
+		opts = require("config.blink"),
 
-        opts_extend = {
-            "sources.default",
-        },
-    },
+		opts_extend = {
+			"sources.default",
+		},
+	},
 }
